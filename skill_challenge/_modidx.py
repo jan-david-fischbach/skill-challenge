@@ -5,4 +5,5 @@ d = { 'settings': { 'branch': 'main',
                 'doc_host': 'https://Jan-David-Black.github.io',
                 'git_url': 'https://github.com/Jan-David-Black/skill-challenge',
                 'lib_path': 'skill_challenge'},
-  'syms': {'skill_challenge.core': {'skill_challenge.core.foo': ('core.html#foo', 'skill_challenge/core.py')}}}
+  'syms': { 'skill_challenge.core': {'skill_challenge.core.foo': ('singlemode.html#foo', 'skill_challenge/core.py')},
+            'skill_challenge.util': {'skill_challenge.util.TE_pol_fraction': ('util.html#te_pol_fraction', 'skill_challenge/util.py')}}}
