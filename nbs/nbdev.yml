@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "skill-challenge"
+  site-url: "https://Jan-David-Black.github.io/skill-challenge"
+  description: "Testing my skills for application at Taara"
+  repo-branch: main
+  repo-url: "https://github.com/Jan-David-Black/skill-challenge"
