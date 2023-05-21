@@ -24,4 +24,6 @@ def TE_pol_fraction(self):
         
         return np.sum(Ex_sq, axis=(0,1))/np.sum(Ex_sq+Ey_sq, axis=(0,1))
 
+
+# %% ../nbs/00_util.ipynb 5
 setattr(gt.modes.Waveguide, 'TE_pol_fraction', property(TE_pol_fraction))
