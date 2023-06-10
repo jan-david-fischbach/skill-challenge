@@ -3,12 +3,14 @@
 # %% auto 0
 __all__ = ['PDK', 'nm', 'TE_pol_fraction', 'cCrossSection', 'cMode', 'inner', 'cachedComputeModes']
 
-# %% ../nbs/00_util.ipynb 3
+# %% ../nbs/00_util.ipynb 2
 # util functions go here
 import numpy as np
 import gdsfactory.simulation.gtidy3d as gt
 import matplotlib.pyplot as plt
 import gdsfactory as gf
+from tqdm.notebook import tqdm
+import meow as mw
 
 gf.config.rich_output()
 PDK = gf.generic_tech.get_generic_pdk()
@@ -16,7 +18,7 @@ PDK.activate()
 
 nm = 1e-3
 
-# %% ../nbs/00_util.ipynb 4
+# %% ../nbs/00_util.ipynb 3
 def TE_pol_fraction(self):
         """TE polarization fraction according to Lumericals definition. (assuming a regular mesh)"""
         Ex_sq = np.abs(self._data["Ex"])**2
@@ -25,10 +27,10 @@ def TE_pol_fraction(self):
         return np.sum(Ex_sq, axis=(0,1))/np.sum(Ex_sq+Ey_sq, axis=(0,1))
 
 
-# %% ../nbs/00_util.ipynb 5
+# %% ../nbs/00_util.ipynb 4
 setattr(gt.modes.Waveguide, 'TE_pol_fraction', property(TE_pol_fraction))
 
-# %% ../nbs/00_util.ipynb 7
+# %% ../nbs/00_util.ipynb 6
 import meow as mw
 from functools import lru_cache
 import json
@@ -36,20 +38,25 @@ from hashlib import md5
 from meow import BaseModel, CrossSection, Mode
 from pydantic import Field
 
-# %% ../nbs/00_util.ipynb 8
+# %% ../nbs/00_util.ipynb 7
 def dict_to_hash(d: dict):
+  """Converts a dictionary of distinctive properties into a hash using md5"""
   arr = np.frombuffer(md5(json.dumps(d).encode()).digest(), dtype=np.uint8)[-8:]
   idx = np.arange(arr.shape[0], dtype=np.int64)[::-1]
   return np.asarray(np.sum(arr * 255**idx), dtype=np.int_).item()
 
-# %% ../nbs/00_util.ipynb 9
+# %% ../nbs/00_util.ipynb 8
 class cCrossSection(BaseModel):
   cs: CrossSection = Field(
     description="the contained CrossSection"
   )
 
   def __hash__(self):
-    return dict_to_hash(dict(r=self.cs.mesh.bend_radius))
+    m = self.cs.cell.mx
+    return dict_to_hash(dict(r=self.cs.mesh.bend_radius, m=hash(m.tostring())))
+
+  def __eq__(self, other):
+    return hash(self) == hash(other)
 
 class cMode(BaseModel):
   mode: Mode = Field(
@@ -61,8 +68,11 @@ class cMode(BaseModel):
 
   def __hash__(self):
     return dict_to_hash(dict(neff=str(self.mode.neff), r=str(self.mode.cs.mesh.bend_radius)))
+  
+  def __eq__(self, other):
+    return hash(self) == hash(other)
 
-# %% ../nbs/00_util.ipynb 10
+# %% ../nbs/00_util.ipynb 9
 @lru_cache(maxsize=None)
 def inner(ccs, num_modes):
   return mw.compute_modes(ccs.cs, num_modes)
