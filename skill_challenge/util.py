@@ -52,8 +52,8 @@ class cCrossSection(BaseModel):
   )
 
   def __hash__(self):
-    m = self.cs.cell.mx
-    return dict_to_hash(dict(r=self.cs.mesh.bend_radius, m=hash(m.tostring())))
+    m = self.cs.cell.m_full
+    return dict_to_hash(dict(r=self.cs.cell.mesh.bend_radius, m=hash(m.tostring())))
 
   def __eq__(self, other):
     return hash(self) == hash(other)
@@ -67,13 +67,26 @@ class cMode(BaseModel):
     return self.mode
 
   def __hash__(self):
-    return dict_to_hash(dict(neff=str(self.mode.neff), r=str(self.mode.cs.mesh.bend_radius)))
+    return dict_to_hash(dict(neff=str(self.mode.neff), r=str(self.mode.cs.cell.mesh.bend_radius)))
   
   def __eq__(self, other):
     return hash(self) == hash(other)
 
 # %% ../nbs/00_util.ipynb 9
-@lru_cache(maxsize=None)
+from functools import wraps
+def cached(func):
+    func.cache = {}
+    @wraps(func)
+    def wrapper(*args):
+        try:
+            return func.cache[args]
+        except KeyError:
+            func.cache[args] = result = func(*args)
+            return result   
+    return wrapper
+
+# %% ../nbs/00_util.ipynb 10
+@cached
 def inner(ccs, num_modes):
   return mw.compute_modes(ccs.cs, num_modes)
 
