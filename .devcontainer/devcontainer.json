@@ -12,5 +12,5 @@
                    "ms-toolsai.jupyter",
                    "ms-azuretools.vscode-docker"],
     "runServices": ["notebook", "jekyll", "watcher"],
-    "postStartCommand": "pip install -U nbdev -e \".[dev]\" && nbdev_install"
+    "postStartCommand": "pip install -U nbdev -e \".[dev]\" && nbdev_install && nbdev_install_hooks"
 }
