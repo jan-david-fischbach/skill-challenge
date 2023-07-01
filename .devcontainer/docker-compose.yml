@@ -11,7 +11,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - .:/workspace/
+      - ..:/workspace/
 
   notebook:
     <<: *fastai
