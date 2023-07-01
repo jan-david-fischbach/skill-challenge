@@ -5,6 +5,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps: 
-      - uses: fastai/workflows/conda-env@master
+      - uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: nbdev
       - run: conda install pybind11 suitesparse
       - uses: fastai/workflows/nbdev-ci@master
