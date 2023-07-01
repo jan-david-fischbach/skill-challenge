@@ -9,6 +9,7 @@
     "forwardPorts": [4000, 8080],
     "appPort": [4000, 8080],
     "extensions": ["ms-python.python",
+                   "ms-toolsai.jupyter",
                    "ms-azuretools.vscode-docker"],
     "runServices": ["notebook", "jekyll", "watcher"],
     "postStartCommand": "pip install -U nbdev -e \".[dev]\" && nbdev_install"
