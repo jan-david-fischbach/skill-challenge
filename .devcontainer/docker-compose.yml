@@ -2,7 +2,7 @@ version: "3"
 services:
   fastai: &fastai
     restart: unless-stopped
-    working_dir: /data
+    working_dir: /workspace
     image: fastai/codespaces
     logging:
       driver: json-file
@@ -11,7 +11,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - .:/data/
+      - .:/workspace/
 
   notebook:
     <<: *fastai
