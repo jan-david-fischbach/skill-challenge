@@ -6,4 +6,5 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: fastai/workflows/conda-env@master
+      - run: conda install pybind11 suitesparse
       - uses: fastai/workflows/nbdev-ci@master
