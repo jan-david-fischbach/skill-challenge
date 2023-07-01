@@ -9,6 +9,4 @@ jobs:
         with:
           activate-environment: nbdev
       - run: conda install pybind11 suitesparse
-      - uses: Jan-David-Black/fastai-workflows/nbdev-ci@master
-        with:
-          enable_git_lfs: true
+      - uses: fastai/workflows/nbdev-ci@master
