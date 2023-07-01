@@ -20,4 +20,5 @@ d = { 'settings': { 'branch': 'main',
                                       'skill_challenge.util.cachedComputeModes': ( 'util.html#cachedcomputemodes',
                                                                                    'skill_challenge/util.py'),
                                       'skill_challenge.util.dict_to_hash': ('util.html#dict_to_hash', 'skill_challenge/util.py'),
-                                      'skill_challenge.util.inner': ('util.html#inner', 'skill_challenge/util.py')}}}
+                                      'skill_challenge.util.inner': ('util.html#inner', 'skill_challenge/util.py'),
+                                      'skill_challenge.util.te_fraction': ('util.html#te_fraction', 'skill_challenge/util.py')}}}
