@@ -1,0 +1,10 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_util.ipynb
+      - 10_singlemode.ipynb
+      - 20_eulerbend.ipynb
+      - 30_mmi_briefing.ipynb
+      - 32_optimizing_mmi.ipynb
+      - 33_mmi_eme.ipynb
